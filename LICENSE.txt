@@ -1,0 +1,7 @@
+Source Code Viewing License
+
+This software and its source code (the "Software") are the property of Sebastian Manhart. The source code is made available solely for viewing and reading purposes. Any use, reproduction, modification, distribution, or any other action involving this Software is strictly prohibited without the prior written permission of Sebastian Manhart.
+
+For any authorization requests, please contact sebmanhart@gmail.com.
+
+June 5, 2024

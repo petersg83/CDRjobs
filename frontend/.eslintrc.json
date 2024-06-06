@@ -1,0 +1,7 @@
+{
+  "extends": "next/core-web-vitals",
+  "rulse": {
+    "semi": ["error", "never"],
+    "quotes": ["error", "single"]
+  }
+}

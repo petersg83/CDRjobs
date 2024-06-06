@@ -1,0 +1,15 @@
+type Candidate {
+  id: String!
+  firstname: String
+  lastname: String
+  email: String!
+}
+
+# to remove once there is at least one other query
+type Query {
+  hello: String
+}
+
+type Mutation {
+  createCandidate(email: String!, firstname: String, lastname: String, password: String): Candidate!
+}
