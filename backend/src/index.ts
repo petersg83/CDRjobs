@@ -25,7 +25,8 @@ const run = async () => {
   router.all(
     '/graphql',
     koaMiddleware(server, {
-      context: async ({ ctx }) => ({ token: ctx.headers.jwt, session: ctx.session }),
+      // context: async ({ ctx }) => ({ token: ctx.headers.jwt, session: ctx.session }),
+      context: async ({ ctx }) => ctx,
     }),
   )
 

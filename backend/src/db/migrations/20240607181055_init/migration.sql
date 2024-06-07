@@ -1,15 +1,15 @@
 -- CreateTable
-CREATE TABLE "Candidate" (
+CREATE TABLE "User" (
     "id" TEXT NOT NULL,
     "email" TEXT NOT NULL,
-    "firstname" TEXT,
-    "lastname" TEXT,
-    "passwordHash" TEXT,
+    "firstname" TEXT NOT NULL,
+    "lastname" TEXT NOT NULL,
+    "passwordHash" TEXT NOT NULL,
     "verifiedEmail" BOOLEAN NOT NULL DEFAULT false,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
-    CONSTRAINT "Candidate_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -22,7 +22,7 @@ CREATE TABLE "Session" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Candidate_email_key" ON "Candidate"("email");
+CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Session_key_key" ON "Session"("key");
