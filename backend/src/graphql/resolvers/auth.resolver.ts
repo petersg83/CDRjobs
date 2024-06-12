@@ -23,15 +23,6 @@ interface ContextWithSession extends Context {
 }
 
 export default {
-  Query: {
-    // to remove once there is at least one other query
-    hello: (parent: never, args: never, ctx: Context) => {
-      if (ctx.session?.user?.email) {
-        return `hello ${JSON.stringify(ctx.session.user)}`
-      }
-      return 'hello'
-    },
-  },
   Mutation: {
     register: async (
       parent: never,

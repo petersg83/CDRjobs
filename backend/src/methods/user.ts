@@ -2,7 +2,6 @@ import prisma from '@/db/prisma'
 import { User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
-
 type SafeUser = Omit<User, 'passwordHash'>
 
 export const exists = async (email: string): Promise<boolean> => {
@@ -13,6 +12,12 @@ export const exists = async (email: string): Promise<boolean> => {
   })
 
   return !!count
+}
+
+export const getById = async (id: string): Promise<SafeUser|null> => {
+  const user = await prisma.user.findUnique({ where: { id } })
+
+  return user
 }
 
 export const create = async ({ firstname, lastname, email, password }: {
@@ -38,7 +43,7 @@ export const create = async ({ firstname, lastname, email, password }: {
   return user
 }
 
-export const getWithCredentials = async ({ email, password }: { email: string, password: string }) => {
+export const getWithCredentials = async ({ email, password }: { email: string, password: string }): Promise<SafeUser|null> => {
   const user = await prisma.user.findUnique({
     where: {
       email: email.toLowerCase(),

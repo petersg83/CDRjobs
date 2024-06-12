@@ -1,7 +1,3 @@
-# to remove once there is at least one other query
-type Query {
-  hello: String
-}
 
 type Mutation {
   register(email: String!, firstname: String!, lastname: String!, password: String!): User!

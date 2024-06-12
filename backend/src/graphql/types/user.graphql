@@ -4,3 +4,7 @@ type User {
   lastname: String!
   email: String!
 }
+
+type Query {
+  me: User!
+}
