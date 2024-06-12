@@ -12,14 +12,13 @@ import app from './koa'
 const run = async () => {
   const router = new Router()
   const httpServer = http.createServer(app.callback())
-  const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      ApolloServerPluginLandingPageGraphQLPlayground(),
-    ],
-  })
+
+  const plugins = [ApolloServerPluginDrainHttpServer({ httpServer })];
+  if (process.env.NODE_ENV !== 'production') {
+    plugins.push(ApolloServerPluginLandingPageGraphQLPlayground())
+  }
+
+  const server = new ApolloServer({ typeDefs, resolvers, plugins })
   await server.start()
 
   router.all(
@@ -33,7 +32,7 @@ const run = async () => {
   app.use(router.routes())
 
   await new Promise((resolve) => httpServer.listen({ port: 4000 }, () => resolve(undefined)))
-  console.log('🚀 Server ready at http://localhost:4000')
+  console.log('🚀 Server ready on port 4000')
 }
 
 run()
