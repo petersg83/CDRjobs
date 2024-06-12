@@ -5,7 +5,7 @@ import {
   exists as userAlreadyExists,
   create as createUser,
   getWithCredentials as getUserWithCredentials
-} from '@/methods/user'
+} from '../../methods/user'
 import { pick } from 'lodash/fp'
 
 // TODO: to move to proper type files

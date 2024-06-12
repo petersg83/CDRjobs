@@ -2,8 +2,8 @@ import Koa from 'koa'
 import session from 'koa-session'
 import bodyParser from 'koa-bodyparser'
 import cors from '@koa/cors'
-import config from '@/config'
-import prisma from '@/db/prisma'
+import config from './config'
+import prisma from './db/prisma'
 
 const store = {
   get: async (key: string) => {

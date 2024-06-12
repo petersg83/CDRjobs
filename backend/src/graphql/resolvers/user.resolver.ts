@@ -1,8 +1,6 @@
 import { Context } from 'koa'
 import { GraphQLError } from 'graphql'
-import {
-  getById as getUserById,
-} from '@/methods/user'
+import { getById as getUserById } from '../../methods/user'
 
 export default {
   Query: {

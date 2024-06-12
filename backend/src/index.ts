@@ -5,8 +5,8 @@ import { ApolloServerPluginDrainHttpServer } from '@apollo/server/plugin/drainHt
 import { koaMiddleware } from '@as-integrations/koa'
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require('@apollo/server-plugin-landing-page-graphql-playground')
-import { typeDefs, resolvers } from '@/graphql'
-import app from '@/koa'
+import { typeDefs, resolvers } from './graphql'
+import app from './koa'
 
 
 const run = async () => {

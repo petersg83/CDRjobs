@@ -1,4 +1,4 @@
-import prisma from '@/db/prisma'
+import prisma from '../db/prisma'
 import { User } from '@prisma/client'
 import bcrypt from 'bcrypt'
 
