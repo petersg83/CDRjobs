@@ -1,4 +1,5 @@
 import { useAuth } from '@/context/AuthContext'
+import Button from './atoms/Button'
 
 const LogoutButton = () => {
   const { setAuthUser } = useAuth()
@@ -6,9 +7,7 @@ const LogoutButton = () => {
     setAuthUser(null)
   }
 
-  return (<button onClick={onClick}>
-    Logout
-  </button>)
+  return <Button onClick={onClick} text='Logout' />
 }
 
 export default LogoutButton

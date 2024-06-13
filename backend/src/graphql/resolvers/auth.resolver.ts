@@ -48,6 +48,8 @@ export default {
       if (user) {
         ctx.session.user = pick(['id', 'email', 'firstname', 'lastname'], user)
       }
+
+      return user
     },
     logout: async (parent: never, args: never, ctx: Context) => {
       ctx.session = null

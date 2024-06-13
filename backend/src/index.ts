@@ -7,9 +7,18 @@ import { koaMiddleware } from '@as-integrations/koa'
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require('@apollo/server-plugin-landing-page-graphql-playground')
 import { typeDefs, resolvers } from './graphql'
 import app from './koa'
+import prisma from './db/prisma'
 
 
 const run = async () => {
+  // Check database connection
+  try {
+    await prisma.$connect()
+  } catch (e) {
+    throw new Error('Couldn\'t connect to database')
+  }
+
+  // Set up graphql server
   const router = new Router()
   const httpServer = http.createServer(app.callback())
 
