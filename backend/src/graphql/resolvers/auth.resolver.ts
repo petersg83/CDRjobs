@@ -1,11 +1,7 @@
 import { Context } from 'koa'
 import { Session } from 'koa-session'
 import { GraphQLError } from 'graphql'
-import {
-  exists as userAlreadyExists,
-  create as createUser,
-  getWithCredentials as getUserWithCredentials
-} from '../../methods/user'
+import { doesUserExist, createUser, getUserWithCredentials } from '../../methods/user'
 import { pick } from 'lodash/fp'
 
 // TODO: to move to proper type files
@@ -29,7 +25,7 @@ export default {
       { firstname, lastname, email, password }: { email: string, firstname: string, lastname: string, password: string },
       ctx: ContextWithSession
     ) => {
-      const alreadyExists = await userAlreadyExists(email)
+      const alreadyExists = await doesUserExist(email)
 
       if (alreadyExists) {
         throw new GraphQLError('Already exists', { extensions: { code: 'BAD_USER_INPUT' } })
@@ -38,7 +34,7 @@ export default {
       // TODO: validate email and password
       const user = await createUser({ firstname, lastname, email, password })
 
-      ctx.session.user = pick(['id', 'email', 'firstname', 'lastname'], user)
+      ctx.session.userId = user.id
 
       return user
     },
@@ -46,7 +42,7 @@ export default {
       const user = await getUserWithCredentials({ email, password })
 
       if (user) {
-        ctx.session.user = pick(['id', 'email', 'firstname', 'lastname'], user)
+        ctx.session.userId = user.id
       }
 
       return user

@@ -1,16 +1,22 @@
 import { Context } from 'koa'
-import { GraphQLError } from 'graphql'
-import { getById as getUserById } from '../../methods/user'
+import { getUserById, deleteUser } from '../../methods/user'
+import checkLogin from '../utils/checkLogin'
 
 export default {
   Query: {
     me: async (parent: never, args: never, ctx: Context) => {
-      if (!ctx.session?.user?.id) {
-        throw new GraphQLError('You need to be logged in', { extensions: { code: 'UNAUTHENTICATED' } })
-      }
-      const user = await getUserById(ctx.session.user.id)
+      checkLogin(ctx)
+      const user = await getUserById(ctx.session!.userId)
       
       return user
     },
   },
+  Mutation: {
+    deleteAccount: async (parent: never, args: never, ctx: Context) => {
+      checkLogin(ctx)
+      const user = await deleteUser(ctx.session!.userId)
+      
+      return user
+    },
+  }
 }

@@ -4,7 +4,7 @@ import bcrypt from 'bcrypt'
 
 type SafeUser = Omit<User, 'passwordHash'>
 
-export const exists = async (email: string): Promise<boolean> => {
+export const doesUserExist = async (email: string): Promise<boolean> => {
   const count = await prisma.user.count({
     where: {
       email: email.toLowerCase(),
@@ -14,13 +14,13 @@ export const exists = async (email: string): Promise<boolean> => {
   return !!count
 }
 
-export const getById = async (id: string): Promise<SafeUser|null> => {
+export const getUserById = async (id: string): Promise<SafeUser|null> => {
   const user = await prisma.user.findUnique({ where: { id } })
 
   return user
 }
 
-export const create = async ({ firstname, lastname, email, password }: {
+export const createUser = async ({ firstname, lastname, email, password }: {
   firstname: string,
   lastname: string,
   email: string,
@@ -43,7 +43,7 @@ export const create = async ({ firstname, lastname, email, password }: {
   return user
 }
 
-export const getWithCredentials = async ({ email, password }: { email: string, password: string }): Promise<SafeUser|null> => {
+export const getUserWithCredentials = async ({ email, password }: { email: string, password: string }): Promise<SafeUser|null> => {
   const user = await prisma.user.findUnique({
     where: {
       email: email.toLowerCase(),
@@ -57,4 +57,16 @@ export const getWithCredentials = async ({ email, password }: { email: string, p
   const match = await bcrypt.compare(password, user.passwordHash)
 
   return match ? user : null
+}
+
+export const deleteUser = async (id: string) => {
+  const user = await getUserById(id)
+
+  if (!user) {
+    throw new Error("Can't delete user because it doesn't exist")
+  }
+
+  await prisma.user.delete({ where: { id } })
+
+  return user
 }

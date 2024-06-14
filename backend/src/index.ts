@@ -8,7 +8,7 @@ const { ApolloServerPluginLandingPageGraphQLPlayground } = require('@apollo/serv
 import { typeDefs, resolvers } from './graphql'
 import app from './koa'
 import prisma from './db/prisma'
-
+import { doesUserExist } from './methods/user'
 
 const run = async () => {
   // Check database connection
@@ -33,8 +33,16 @@ const run = async () => {
   router.all(
     '/graphql',
     koaMiddleware(server, {
-      // context: async ({ ctx }) => ({ token: ctx.headers.jwt, session: ctx.session }),
-      context: async ({ ctx }) => ctx,
+      context: async ({ ctx }) => {
+        if (ctx.session?.userId) {
+          const exists = doesUserExist(ctx.session?.userId)
+          if (!exists) {
+            ctx.session = null
+          }
+        }
+
+        return ctx
+      },
     }),
   )
 

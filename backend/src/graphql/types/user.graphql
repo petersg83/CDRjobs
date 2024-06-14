@@ -8,3 +8,7 @@ type User {
 type Query {
   me: User!
 }
+
+type Mutation {
+  deleteAccount: User!
+}

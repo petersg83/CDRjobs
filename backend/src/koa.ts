@@ -33,10 +33,14 @@ const sessionConfig = {
   maxAge: 2592000000,
   renew: true,
   rolling: true,
+  sameSite: false,
 }
 
 app.use(session(sessionConfig, app))
-app.use(cors())
+app.use(cors({
+  // origin: // set frontend url ?
+  credentials: true
+}))
 app.use(bodyParser())
 
 export default app
